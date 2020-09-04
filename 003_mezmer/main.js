@@ -1,4 +1,3 @@
-
 /**
  * Varables (these can change during runtime)
  */
@@ -8,7 +7,7 @@ var omega;
 
 /**
  * Now let's make more variables to control the position of the circle on the
- * canvas. More details in reset().
+ * canvas. More details in resetSimulation().
  */
 var omega2;
 var omega3;
@@ -33,7 +32,7 @@ const MIN_DIA = 20;
 /**
  * Resets variables when the window resizes and sets them when called in setup(). 
  */
-function reset() {
+function resetSimulation() {
     firstFrame = true;
     time = 0;
     omega = 2 * PI / 4000;
@@ -92,12 +91,12 @@ function reset() {
 
 function setup() {
     createCanvas(windowWidth, windowHeight);
-    reset();
+    resetSimulation();
 }
 
 function windowResized() {
     resizeCanvas(windowWidth, windowHeight);
-    reset();
+    resetSimulation();
 }
 
 /**
@@ -115,16 +114,17 @@ function draw() {
      * 
      * In this case, the background will be drawn (a very dark grey), and the
      * variable firstFrame will be set to false. The only time firstFrame will
-     * be true is when the program has just started or reset() has been called.
+     * be true is when the program has just started or resetSimulation() 
+     * has been called.
      * 
      * The background() function does two things:
      *  1. It clears all of the pixels in the canvas back to a blank state, and
      *  2. It paints the entire canvas the color you specify.
      * 
      * This logic means that the canvas will only be cleared and the background
-     * repainted when the program first executes or when reset(), and that
-     * produces the awesome effect we see of the circle brushing color across
-     * the canvas.
+     * repainted when the program first executes or when resetSimulation(), and 
+     * that produces the awesome effect we see of the circle brushing color 
+     * across the canvas.
      */
     if (firstFrame == true) {
         background(20, 20, 20);
@@ -146,7 +146,7 @@ function draw() {
      *  
      * In order to draw relative to the center of the canvas, we call translate
      * here to move the "origin" of the drawing to the center of the canvas.
-     * We recalculate these values every time reset() is called.
+     * We recalculate these values every time resetSimulation() is called.
      * 
      * Experiment with hard-coding other values in to this function to see how
      * it affects the drawing.
@@ -161,8 +161,8 @@ function draw() {
      * omega2 and omega3 (which means they oscillate at different speeds).
      * 
      * Experiment with changing the periodic frequencies of each expression
-     * omega2 and omega3 (recall we set these values in reset() on lines 64 
-     * and 68):
+     * omega2 and omega3 (recall we set these values in resetSimulation() on 
+     * lines 64 and 68):
      *  * What happens when they are both the same 
      *    (omega2 = 2 * PI / 2000, omega3 = 2 * PI / 2000)?
      * 

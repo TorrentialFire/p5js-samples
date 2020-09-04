@@ -1,4 +1,3 @@
-
 /**
  * Varables (these can change during runtime)
  */
@@ -12,7 +11,7 @@ var canvasCenterX;
 var canvasCenterY;
 
 /**
- * Controls drawing the background on the first frame or on reset() only.
+ * Controls drawing the background on the first frame or on resetSimulation() only.
  */
 var firstFrame = true;
 
@@ -26,7 +25,7 @@ const MIN_DIA = 20;
 /**
  * Resets variables when the window resizes and sets them when called in setup(). 
  */
-function reset() {
+function resetSimulation() {
     firstFrame = true;
     time = 0;
     omega = 2 * PI / 4000;
@@ -69,12 +68,12 @@ function reset() {
 
 function setup() {
     createCanvas(windowWidth, windowHeight);
-    reset();
+    resetSimulation();
 }
 
 function windowResized() {
     resizeCanvas(windowWidth, windowHeight);
-    reset();
+    resetSimulation();
 }
 
 /**
@@ -84,7 +83,10 @@ function windowResized() {
  */
 function draw() {
 
-    // Only draw the background when the program starts or reset() is called.
+    /**
+     * Only draw the background when the program starts or resetSimulation() 
+     * is called.
+     */
     if (firstFrame == true) {
         background(20, 20, 20);
         firstFrame = false;
@@ -96,7 +98,7 @@ function draw() {
      * 
      * In order to draw relative to the center of the canvas, we call translate
      * here to move the "origin" of the drawing to the center of the canvas.
-     * We recalculate these values every time reset() is called.
+     * We recalculate these values every time resetSimulation() is called.
      */
     translate(canvasCenterX, canvasCenterY);
 

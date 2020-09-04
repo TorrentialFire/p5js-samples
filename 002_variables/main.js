@@ -1,4 +1,3 @@
-
 /**
  * Variables have "scope", generally speaking if a variable is declared in 
  * curly braces, "{}" then the variable is not accessible outside of them. 
@@ -26,7 +25,7 @@ const MIN_DIA = 20;
  * Let's create a function that resets any variables that need to reset when the
  * window resizes and be set in setup(). 
  */
-function reset() {
+function resetSimulation() {
     time = 0;
     omega = 2 * PI / 2000;
     /**
@@ -42,12 +41,12 @@ function reset() {
 
 function setup() {
     createCanvas(windowWidth, windowHeight);
-    reset();
+    resetSimulation();
 }
 
 function windowResized() {
     resizeCanvas(windowWidth, windowHeight);
-    reset();
+    resetSimulation();
 }
 
 /**
