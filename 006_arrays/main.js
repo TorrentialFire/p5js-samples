@@ -16,6 +16,12 @@ var omegas = [];
 // Boolean which controls drawing the background (first frame or reset).
 var firstFrame = true;
 
+/**
+ * Add a boolean to control drawing certain shapes when we want to debug the 
+ * draw algorithms.
+ */
+var drawDebug = false;
+
 // Store the canvas and current simulation frame count (used to save an image).
 var canvas;
 var simulationFrames;
@@ -45,6 +51,11 @@ function resetSimulation() {
     advanceFrame = false;
 
     /**
+     * Reset the debug drawing boolean.
+     */
+    drawDebug = false;
+
+    /**
      * We set simulation frame count equal to 0 here, so every time we reset 
      * our simlation, the frames will start from 0 again. 
      * 
@@ -53,7 +64,7 @@ function resetSimulation() {
     simulationFrames = 0;
     firstFrame = true;
     time = 0;
-    diaOmega = 2 * PI / 4000;
+    diaOmega = 2 * PI / 2000;
 
     /**
      * Periodic frequency, omega (in Hz), of a periodic wave (sin or cos) is 
@@ -69,17 +80,17 @@ function resetSimulation() {
     radii = [
         sm / 4,
         sm / 5,
-        sm / 7,
-        sm / 19,
-        sm / 37
+        // sm / 7,
+        // sm / 19,
+        // sm / 37
     ];
 
     omegas = [];
-    omegas.push(TWO_PI / 20351);
-    omegas.push(TWO_PI / 12829);
-    omegas.push(TWO_PI / (4211) * sqrt(2));
-    omegas.push(TWO_PI / 2932);
-    omegas.push(TWO_PI / (1102) * sqrt(3));
+    omegas.push(TWO_PI / 30000);
+    omegas.push(TWO_PI / 10000);
+    // omegas.push(TWO_PI / 20000);
+    // omegas.push(TWO_PI / 15000);
+    // omegas.push(TWO_PI / 12000);
 
     /**
      * Calculate the center of the canvas to use with translate() in draw() to
@@ -127,6 +138,13 @@ function toggleSimulationPaused() {
 }
 
 /**
+ * This function toggles the drawing of "debug" shapes on to the screen.
+ */
+function toggleDrawDebug() {
+    drawDebug = !drawDebug;
+}
+
+/**
  * This function switches the state of the window between fullscreen and not
  * using the p5.js built-in function fullscreen().
  */
@@ -150,7 +168,7 @@ function captureCanvas() {
      * Reference for saveCanvas():
      * https://p5js.org/reference/#/p5/saveCanvas
      */
-    saveCanvas(canvas, 'frame_' + frameCount, '.png');
+    saveCanvas(canvas, 'frame_' + frameCount + '.png');
 }
 
 /**
@@ -190,6 +208,9 @@ function keyPressed() {
     } else if (keyCode === 67) { // key 'c'
         captureCanvas();
         preventDefault = true;
+    } else if (keyCode === 68) { // key 'd'
+        toggleDrawDebug();
+        preventDefault = true;
     }
 
     return !preventDefault;
@@ -213,6 +234,7 @@ function draw() {
          * Only draw the background when the program starts or resetSimulation()
          * is called. 
          */
+        background(20, 20, 20, 1);
         if (firstFrame == true) {
             background(20, 20, 20);
             firstFrame = false;
@@ -240,9 +262,18 @@ function draw() {
         scale(1.0, -1.0);
         
         push();
+        
         for (var i = 0; i < radii.length; i++) {
+            
             rotate(omegas[i] * time);
-            translate(radii[i], 0);
+
+            if (drawDebug === true) {
+                strokeWeight(2);
+                stroke(255, 255, 255);
+                line(0, 0, radii[i], 0);
+            }
+
+            translate(radii[i], 0);    
         }
 
         /**
@@ -268,7 +299,12 @@ function draw() {
         noStroke();
         fill(hue, 100, 100);
         circle(0, 0, dia);
-
+        
+        /**
+         * Reset the transformation state of the canvas. This clears all the
+         * translate, rotate, and shear operations that have happened since
+         * the call to push above.
+         */
         pop();
 
         /**
