@@ -6,7 +6,8 @@
         {
             "label": "Start browser-sync",
             "type": "shell",
-            "command": "browser-sync start --server '${fileDirname}' --files '${fileDirname}' --port 8080"
+            "command": "browser-sync start --server '${fileDirname}' --files '${fileDirname}' --port 8080",
+            "problemMatcher": []
         }
     ]
 }
