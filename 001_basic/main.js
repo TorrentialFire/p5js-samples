@@ -14,7 +14,7 @@ function windowResized() {
 }
 
 function draw() {
-    background(220, 220, 220);
+    background(140, 140, 140);
 
     circle(80, 80, 50);
 }

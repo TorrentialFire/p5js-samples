@@ -1,6 +1,6 @@
 
 /**
- *  1. Variables have "scope", generally speaking if a variable is declared in 
+ * Variables have "scope", generally speaking if a variable is declared in 
  * curly braces, "{}" then the variable is not accessible outside of them. 
  * 
  * Starting out, we can define our variables with "global" scope. Later on,
@@ -56,7 +56,7 @@ function windowResized() {
  * variables.
  */
 function draw() {
-    background(220, 220, 220);
+    background(140, 140, 140);
 
     /**
      * Reference for the sin() function.
@@ -70,15 +70,38 @@ function draw() {
      */
     var dia = (MAX_DIA - MIN_DIA) * ((sin(omega * time) + 1) / 2) + MIN_DIA;
 
+    /**
+     * References for lerp(), colorMode(), and fill():
+     * https://p5js.org/reference/#/p5/lerp
+     * https://p5js.org/reference/#/p5/colorMode
+     * https://p5js.org/reference/#/p5/fill 
+     * 
+     * Let's have some fun with the color of the circle. 
+     */
     var hue = lerp(0, 255, (time % 10001) / 10000.0);
     colorMode(HSB);
     fill(hue, 255, 255);
+
+    /**
+     * Here we apply the diameter we calculated above.
+     */
     circle(200, 200, dia);
+    
+    /**
+     * We have to reset the color mode to RGB before finishing the frame.
+     * Otherwise, the background of the next frame (the background() function
+     * call above) will be drawn using HSB. That's because the renderer is
+     * "stateful" something we have to deal with now, but we can learn more
+     * about later.
+     */
     colorMode(RGB)
+
     /**
      * In order for drawings to animate, we must keep track of how much time
      * is passing. p5.js has a variable that measures the time (in milliseconds)
-     * between frames 
+     * between frames called "deltaTime". By adding it to our time variable, we
+     * can keep track of how much time has passed in our simulation, allowing
+     * us to use time as a variable to change various parameters.
      */
     time += deltaTime;
 }
